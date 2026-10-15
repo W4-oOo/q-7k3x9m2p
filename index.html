@@ -1,0 +1,31 @@
+<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Clinic sale - quick questions</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;color:#222}
+fieldset{border:1px solid #ccc;border-radius:8px;margin:14px 0;padding:10px 14px}legend{font-weight:600;padding:0 6px}
+label{display:block;padding:6px 0}button{font:inherit;padding:12px 20px;border:0;border-radius:8px;background:#0a5;color:#fff;width:100%}
+textarea{width:100%;font:inherit}small{color:#666}</style></head><body>
+<h1>Clinic sale - 8 quick questions</h1>
+<p>Tap one answer for each. "Not sure" is fine. Nothing is sent until you press the button at the end. <b>Please do not sign anything yet.</b></p>
+<form id="f">
+<script>
+const Q=[
+["1. Who is the tenant on the clinic lease?",["JHG Enterprises","David personally","Not sure"]],
+["2. Did David give the landlord a guarantee (personal or bank)?",["Yes - personal guarantee","Yes - bank guarantee","No","Not sure"]],
+["3. How long has JHG run the clinic?",["Under 15 years","15 years or more","Not sure"]],
+["4. David's age?",["Under 55","55 or over"]],
+["5. Is JHG registered for GST?",["Yes","No","Not sure"]],
+["6. Any Medicare/PSR audit, AHPRA or HCCC complaint, or patient claim in the last 7 years (any doctor)?",["None","Yes, one or more","Not sure"]],
+["7. Is any equipment financed, leased or under a PPSR registration?",["No - all owned outright","Yes, some","Not sure"]],
+["8. Where did the $119,999 / $1 split come from?",["Gary's side proposed it","Our accountant proposed it","Not sure"]]
+];
+Q.forEach((q,i)=>{document.write('<fieldset><legend>'+q[0]+'</legend>'+q[1].map(o=>'<label><input type="radio" name="q'+i+'" value="'+o+'" required> '+o+'</label>').join('')+'</fieldset>')});
+</script>
+<fieldset><legend>Anything else? (optional)</legend><textarea id="n" rows="3"></textarea></fieldset>
+<p><small>The button opens an email to Rich with your answers. Please also send a copy of the lease, and your accountant's figures (turnover, net assets, written-down value of the equipment).</small></p>
+<button type="submit">Send my answers to Rich</button></form>
+<script>
+document.getElementById('f').onsubmit=e=>{e.preventDefault();
+let b='Answers on the clinic sale:\n\n';Q.forEach((q,i)=>{b+=q[0]+'\n  -> '+document.querySelector('input[name=q'+i+']:checked').value+'\n'});
+b+='\nNotes: '+document.getElementById('n').value;
+location.href='mailto:richard@giddey.com.au?subject='+encodeURIComponent('Clinic sale - David answers')+'&body='+encodeURIComponent(b)};
+</script></body></html>
