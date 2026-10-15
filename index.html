@@ -3,9 +3,9 @@
 <style>body{font:16px/1.5 system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;color:#222}
 fieldset{border:1px solid #ccc;border-radius:8px;margin:14px 0;padding:10px 14px}legend{font-weight:600;padding:0 6px}
 label{display:block;padding:6px 0}button{font:inherit;padding:12px 20px;border:0;border-radius:8px;background:#0a5;color:#fff;width:100%}
-textarea{width:100%;font:inherit}small{color:#666}</style></head><body>
+textarea{width:100%;font:inherit;box-sizing:border-box;margin-top:6px}small{color:#666}</style></head><body>
 <h1>Clinic sale - 8 quick questions</h1>
-<p>Tap one answer for each. "Not sure" is fine. Nothing is sent until you press the button at the end. <b>Please do not sign anything yet.</b></p>
+<p>Tap one answer for each. You can add detail in the boxes if you want. "Not sure" is fine. Nothing is sent until you press the button at the end. <b>Please do not sign anything yet.</b></p>
 <form id="f">
 <script>
 const Q=[
@@ -18,14 +18,14 @@ const Q=[
 ["7. Is any equipment financed, leased or under a PPSR registration?",["No - all owned outright","Yes, some","Not sure"]],
 ["8. Where did the $119,999 / $1 split come from?",["Gary's side proposed it","Our accountant proposed it","Not sure"]]
 ];
-Q.forEach((q,i)=>{document.write('<fieldset><legend>'+q[0]+'</legend>'+q[1].map(o=>'<label><input type="radio" name="q'+i+'" value="'+o+'" required> '+o+'</label>').join('')+'</fieldset>')});
+Q.forEach((q,i)=>{document.write('<fieldset><legend>'+q[0]+'</legend>'+q[1].map(o=>'<label><input type="radio" name="q'+i+'" value="'+o+'" required> '+o+'</label>').join('')+'<textarea name="d'+i+'" rows="2" placeholder="Add detail here if you want (optional)"></textarea></fieldset>')});
 </script>
-<fieldset><legend>Anything else? (optional)</legend><textarea id="n" rows="3"></textarea></fieldset>
+<fieldset><legend>Anything else you want to tell Rich? (optional)</legend><textarea id="n" rows="8" placeholder="Write as much as you like - extra detail, worries, questions."></textarea></fieldset>
 <p><small>The button opens an email to Rich with your answers. Please also send a copy of the lease, and your accountant's figures (turnover, net assets, written-down value of the equipment).</small></p>
 <button type="submit">Send my answers to Rich</button></form>
 <script>
 document.getElementById('f').onsubmit=e=>{e.preventDefault();
-let b='Answers on the clinic sale:\n\n';Q.forEach((q,i)=>{b+=q[0]+'\n  -> '+document.querySelector('input[name=q'+i+']:checked').value+'\n'});
+let b='Answers on the clinic sale:\n\n';Q.forEach((q,i)=>{b+=q[0]+'\n  -> '+document.querySelector('input[name=q'+i+']:checked').value+'\n';let d=document.querySelector('textarea[name=d'+i+']').value.trim();if(d)b+='  Detail: '+d+'\n'});
 b+='\nNotes: '+document.getElementById('n').value;
 location.href='mailto:richard@giddey.com.au?subject='+encodeURIComponent('Clinic sale - David answers')+'&body='+encodeURIComponent(b)};
 </script></body></html>
